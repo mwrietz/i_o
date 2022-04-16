@@ -2,15 +2,19 @@
 // 20220402
 
 //use std::io::Write;
-use std::io::{stdout, Write};
 use colored::Colorize;
+use crossterm::{cursor, execute};
+use getch::Getch;
 use std::io;
 use std::io::prelude::*;
-use getch::Getch;
-use crossterm::{execute, cursor};
+use std::io::{stdout, Write};
 
 pub fn cls() {
     std::process::Command::new("clear").status().unwrap();
+}
+
+pub fn cmove(x: u16, y: u16) {
+    execute!(stdout(), cursor::MoveTo(x, y)).unwrap();
 }
 
 pub fn get_int(prompt: &str) -> i32 {
@@ -83,20 +87,19 @@ pub fn get_string_default(prompt: &str, default: &str) -> String {
 
     if buffer.eq("") {
         return default.to_string();
-    }
-    else {
+    } else {
         return buffer;
     }
 }
 
-fn horiz_line() {
+pub fn horiz_line() {
     for _i in 0..80 {
         print!("-");
     }
     println!("");
 }
 
-fn horiz_line_blue() {
+pub fn horiz_line_blue() {
     for _i in 0..80 {
         print!("{}", "-".blue().bold());
     }
@@ -105,11 +108,10 @@ fn horiz_line_blue() {
 
 //pub fn menu(items: &mut Vec<&str>) -> u8 {
 pub fn menu(items: &Vec<&str>) -> u8 {
-
     println!("");
     println!("Option Menu:");
     for (i, item) in items.iter().enumerate() {
-        println!("    {}) {}", i+1, item);
+        println!("    {}) {}", i + 1, item);
     }
 
     println!("");
@@ -121,7 +123,7 @@ pub fn menu(items: &Vec<&str>) -> u8 {
     loop {
         let g = Getch::new();
         _a = g.getch().unwrap();
-        if _a<=48 || _a>(48+menu_len as u8) {
+        if _a <= 48 || _a > (48 + menu_len as u8) {
             continue;
         }
         break;
@@ -139,20 +141,14 @@ pub fn menu(items: &Vec<&str>) -> u8 {
 // let val = menu_horiz(keys, menu_items);
 //
 pub fn menu_horiz(keys: &Vec<&str>, items: &Vec<&str>) -> char {
-
     let (_width, height) = tsize();
-    cmove(0, height-2);
+    cmove(0, height - 2);
 
     horiz_line();
     for (i, item) in items.iter().enumerate() {
         print!("{:>4}:{}", keys[i].green(), item);
     }
     execute!(stdout(), cursor::Hide).unwrap();
-    //println!("");
-    //horiz_line();
-
-    //println!("");
-    //print!("Select Option: ");
     io::stdout().flush().unwrap();
 
     let mut _a: u8 = 0;
@@ -194,7 +190,6 @@ pub fn pause_any() {
 }
 
 pub fn print_title(title_string: &str) {
-    //horiz_line();
     for c in title_string.chars() {
         print!("{}", " ");
         print!("{}", c);
@@ -214,6 +209,31 @@ pub fn print_title_blue(title_string: &str) {
     println!("");
 }
 
+pub fn splash_screen(line1: &str, line2: &str) {
+    //const VERSION: &str = env!("CARGO_PKG_VERSION");
+
+    cls();
+    let (width, height) = tsize();
+
+    let line1_length: u16 = line1.len() as u16;
+    cmove(width / 2 - line1_length / 2, height / 2 - 1);
+    println!("{}", line1);
+
+    let line2_length: u16 = line2.len() as u16;
+    cmove(width / 2 - line2_length / 2, height / 2);
+    println!("{}", line2);
+
+    execute!(stdout(), cursor::Hide).unwrap();
+
+    // pause for splash screen
+    //let one_sec = std::time::Duration::from_millis(1000);
+    let dur = std::time::Duration::new(2, 0);
+    std::thread::sleep(dur);
+    cls();
+
+    execute!(stdout(), cursor::Show).unwrap();
+}
+
 pub fn timestamp() -> String {
     let now = chrono::Local::now();
     return now.to_string();
@@ -226,40 +246,9 @@ pub fn tsize() -> (u16, u16) {
     if let Some((w, h)) = term_size::dimensions() {
         width = w as u16;
         height = h as u16;
-    }
-    else {
+    } else {
         println!("Unable to determine term size");
     }
 
     (width, height)
-}
-
-pub fn cmove(x: u16, y: u16) {
-    execute!(stdout(), cursor::MoveTo(x, y)).unwrap();
-}
-
-pub fn splash_screen(line1: &str, line2: &str) {
-    //const VERSION: &str = env!("CARGO_PKG_VERSION");
-
-    cls();
-    let (width, height) = tsize();
-
-    let line1_length: u16 = line1.len() as u16;
-    cmove(width/2 - line1_length/2, height/2-1);
-    println!("{}", line1);
-
-    //let message_line2 = "v".to_owned() + VERSION;
-    let line2_length: u16 = line2.len() as u16;
-    cmove(width/2 - line2_length/2, height/2);
-    println!("{}", line2);
-
-    execute!(stdout(), cursor::Hide).unwrap();
-
-    // pause one second for splash screen
-    //let one_sec = std::time::Duration::from_millis(1000);
-    let dur = std::time::Duration::new(2,0);
-    std::thread::sleep(dur);
-    cls();
-
-    execute!(stdout(), cursor::Show).unwrap();
 }
