@@ -1,0 +1,13 @@
+[package]
+name = "i_o"
+version = "0.2.3"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "0.4"
+colored = "2"
+getch = "0.3.1"
+term_size = "0.3.2"
+crossterm = "0.23.2"
