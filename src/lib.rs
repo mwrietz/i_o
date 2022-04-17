@@ -1,7 +1,6 @@
 // i_o - my input/output library
-// 20220402
+// 20220417
 
-//use std::io::Write;
 use colored::Colorize;
 use crossterm::{cursor, execute};
 use getch::Getch;
@@ -239,15 +238,10 @@ pub fn timestamp() -> String {
 }
 
 pub fn tsize() -> (u16, u16) {
-    let mut width: u16 = 0;
-    let mut height: u16 = 0;
-
-    if let Some((w, h)) = term_size::dimensions() {
-        width = w as u16;
-        height = h as u16;
-    } else {
-        println!("Unable to determine term size");
-    }
-
-    (width, height)
+    let size = crossterm::terminal::size();
+    let (w, h) = match size {
+        Ok((w, h)) => (w, h),
+        Err(error) => panic!("tsize error: {:?}", error),
+    };
+    (w, h)
 }
