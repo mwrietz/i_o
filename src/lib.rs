@@ -106,7 +106,6 @@ pub fn horiz_line_blue() {
     println!("");
 }
 
-//pub fn menu(items: &mut Vec<&str>) -> u8 {
 pub fn menu(items: &Vec<&str>) -> u8 {
     println!("");
     println!("Option Menu:");
@@ -217,7 +216,7 @@ pub fn splash_screen(line1: &str, line2: &str) {
 
     let line1_length: u16 = line1.len() as u16;
     cmove(width / 2 - line1_length / 2, height / 2 - 1);
-    println!("{}", line1);
+    println!("{}", line1.bold());
 
     let line2_length: u16 = line2.len() as u16;
     cmove(width / 2 - line2_length / 2, height / 2);
