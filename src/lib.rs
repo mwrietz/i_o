@@ -219,7 +219,7 @@ pub fn splash_screen(line1: &str, line2: &str) {
     println!("{}", line1.bold());
 
     let line2_length: u16 = line2.len() as u16;
-    cmove(width / 2 - line2_length / 2, height / 2);
+    cmove(width / 2 - line2_length / 2, height / 2 + 1);
     println!("{}", line2);
 
     execute!(stdout(), cursor::Hide).unwrap();
