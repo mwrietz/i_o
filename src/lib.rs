@@ -182,9 +182,15 @@ pub fn pause() {
 }
 
 pub fn pause_any() {
-    println!("Press any key to continue...");
+    let (w, h) = tsize();
+    let message = "Press any key to continue...".blue();
+    let message_len: u16 = message.len() as u16;
+    cmove((w - message_len)/2, h - 3);
+    print!("{}", message);
+    std::io::stdout().flush().unwrap();
     let g = Getch::new();
     let _keypress = g.getch().unwrap();
+    cls();
 }
 
 pub fn print_title(title_string: &str) {
