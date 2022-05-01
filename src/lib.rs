@@ -35,7 +35,7 @@ pub fn get_int(prompt: &str) -> i32 {
     }
 }
 
-pub fn get_float(prompt: &str) -> f32 {
+pub fn get_float(prompt: &str) -> f64 {
     loop {
         let mut buffer = String::new();
         print!("{}", prompt);
@@ -46,7 +46,32 @@ pub fn get_float(prompt: &str) -> f32 {
             .read_line(&mut buffer)
             .expect("Failed to read line");
 
-        let buffer: f32 = match buffer.trim().parse() {
+        let buffer: f64 = match buffer.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+        return buffer;
+    }
+}
+
+// this function is not working
+pub fn get_float_default(prompt: &str, default: f64) -> f64 {
+    loop {
+        let mut buffer = String::new();
+        print!("{} [{:.3}]: ", prompt, default);
+
+        std::io::stdout().flush().unwrap();
+
+        std::io::stdin()
+            .read_line(&mut buffer)
+            .expect("Failed to read line");
+
+        // this if statment is not working
+        if buffer.eq("\n") {
+            return default;
+        }
+
+        let buffer: f64 = match buffer.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
@@ -105,15 +130,14 @@ pub fn horiz_line_blue() {
     println!("");
 }
 
-pub fn menu(items: &Vec<&str>) -> u8 {
-    println!("");
-    println!("Option Menu:");
+pub fn menu(menu_title: &str, items: &Vec<&str>) -> u8 {
+    println!("{}", menu_title);
     for (i, item) in items.iter().enumerate() {
         println!("    {}) {}", i + 1, item);
     }
 
     println!("");
-    print!("Select Option: ");
+    print!("Selection: ");
     io::stdout().flush().unwrap();
 
     let mut _a: u8 = 0;
