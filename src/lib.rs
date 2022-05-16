@@ -16,6 +16,53 @@ pub fn cmove(x: u16, y: u16) {
     execute!(stdout(), cursor::MoveTo(x, y)).unwrap();
 }
 
+pub fn dialog_box_get_string(width: u16, height: u16, title: &str, prompt: &str) -> String {
+    let (term_width, term_height) = tsize();
+    let x = (term_width - width)/2;
+    let y = (term_height - height)/2;
+
+    let ul = "┌";
+    let ur = "┐";
+    let ll = "└";
+    let lr = "┘";
+    let hor = "─";
+    let ver = "│";
+
+    // draw top horizontal
+    cmove(x, y);
+    print!("{}", ul);
+    for _i in 0..(width-2) {
+        print!("{}", hor);
+    }
+    print!("{}", ur);
+
+    // draw middle
+    for i in 0..(height-1) {
+        cmove(x, y+i+1);
+        print!("{}", ver);
+        for _j in 0..(width-2) {
+            print!(" ");
+        }
+        print!("{}", ver);
+    }
+
+    // draw bottom horizontal
+    cmove(x, y+height);
+    print!("{}", ll);
+    for _i in 0..(width-2) {
+        print!("{}", hor);
+    }
+    println!("{}", lr);
+
+    // print title and get string
+    cmove(x+2, y);
+    print!(" {} ", title.red());
+    cmove(x+3, y+2);
+    let s = get_string(prompt);
+
+    s
+}
+
 pub fn get_int(prompt: &str) -> i32 {
     loop {
         let mut buffer = String::new();
@@ -275,3 +322,4 @@ pub fn tsize() -> (u16, u16) {
     };
     (w, h)
 }
+
