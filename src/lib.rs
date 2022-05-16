@@ -192,7 +192,7 @@ pub fn menu_horiz(keys: &Vec<&str>, items: &Vec<&str>) -> char {
         }
     }
 
-    println!("");
+    //println!("");
 
     _a as char
 }
@@ -209,7 +209,7 @@ pub fn pause_any() {
     let (w, h) = tsize();
     let message = "Press any key to continue...".blue();
     let message_len: u16 = message.len() as u16;
-    cmove((w - message_len)/2, h - 3);
+    cmove((w - message_len)/2, h - 2);
     print!("{}", message);
     std::io::stdout().flush().unwrap();
     let g = Getch::new();
