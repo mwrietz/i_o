@@ -8,6 +8,14 @@ use std::io;
 use std::io::prelude::*;
 use std::io::{stdout, Write};
 
+pub struct Window {
+    pub x: u16,
+    pub y: u16,
+    pub w: u16,
+    pub h: u16,
+    pub title: String,
+}
+
 pub fn cls() {
     std::process::Command::new("clear").status().unwrap();
 }
@@ -323,3 +331,42 @@ pub fn tsize() -> (u16, u16) {
     (w, h)
 }
 
+pub fn window(wdw: &Window) {
+
+    let ul = "┌";
+    let ur = "┐";
+    let ll = "└";
+    let lr = "┘";
+    let hor = "─";
+    let ver = "│";
+
+    // draw top horizontal
+    cmove(wdw.x, wdw.y);
+    print!("{}", ul);
+    for _i in 0..(wdw.w-2) {
+        print!("{}", hor);
+    }
+    print!("{}", ur);
+
+    // draw middle
+    for i in 0..(wdw.h-1) {
+        cmove(wdw.x, wdw.y+i+1);
+        print!("{}", ver);
+        for _j in 0..(wdw.w-2) {
+            print!(" ");
+        }
+        print!("{}", ver);
+    }
+
+    // draw bottom horizontal
+    cmove(wdw.x, wdw.y+wdw.h);
+    print!("{}", ll);
+    for _i in 0..(wdw.w-2) {
+        print!("{}", hor);
+    }
+    println!("{}", lr);
+
+    // print title and get string
+    cmove(wdw.x+2, wdw.y);
+    print!(" {} ", wdw.title.red());
+}
