@@ -384,7 +384,4 @@ pub fn window(wdw: &Window) {
     if wdw.title_color == "purple" {
         print!(" {} ", wdw.title.purple());
     }
-    if wdw.title_color == "orange" {
-        print!(" {} ", wdw.title.orange());
-    }
 }
