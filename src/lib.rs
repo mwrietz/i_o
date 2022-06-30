@@ -14,6 +14,7 @@ pub struct Window {
     pub w: u16,
     pub h: u16,
     pub title: String,
+    pub title_color: String,
 }
 
 pub fn cls() {
@@ -368,5 +369,22 @@ pub fn window(wdw: &Window) {
 
     // print title and get string
     cmove(wdw.x+2, wdw.y);
-    print!(" {} ", wdw.title.red());
+    if wdw.title_color == "red" {
+        print!(" {} ", wdw.title.red());
+    }
+    if wdw.title_color == "green" {
+        print!(" {} ", wdw.title.green());
+    }
+    if wdw.title_color == "blue" {
+        print!(" {} ", wdw.title.blue());
+    }
+    if wdw.title_color == "yellow" {
+        print!(" {} ", wdw.title.yellow());
+    }
+    if wdw.title_color == "purple" {
+        print!(" {} ", wdw.title.purple());
+    }
+    if wdw.title_color == "orange" {
+        print!(" {} ", wdw.title.orange());
+    }
 }
