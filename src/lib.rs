@@ -181,7 +181,7 @@ pub fn horiz_line() {
 
 pub fn horiz_line_blue() {
     for _i in 0..80 {
-        print!("{}", "-".blue().bold());
+        print!("{}", "─".blue().bold());
     }
     println!("");
 }
