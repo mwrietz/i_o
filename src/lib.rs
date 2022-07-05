@@ -248,7 +248,38 @@ pub fn menu_horiz(keys: &Vec<&str>, items: &Vec<&str>) -> char {
         }
     }
 
-    //println!("");
+    _a as char
+}
+
+pub fn menu_horiz_blue(keys: &Vec<&str>, items: &Vec<&str>) -> char {
+    let (_width, height) = tsize();
+    cmove(0, height - 2);
+
+    horiz_line_blue();
+    for (i, item) in items.iter().enumerate() {
+        print!("{:>4}:{}", keys[i].green(), item);
+    }
+    execute!(stdout(), cursor::Hide).unwrap();
+    io::stdout().flush().unwrap();
+
+    let mut _a: u8 = 0;
+    let keys_len = keys.len();
+    loop {
+        let mut flag = false;
+        let g = Getch::new();
+        _a = g.getch().unwrap();
+
+        for i in 0..keys_len {
+            let ch = keys[i].chars().nth(0).unwrap();
+            if (_a as char) == ch {
+                flag = true;
+                break;
+            }
+        }
+        if flag == true {
+            break;
+        }
+    }
 
     _a as char
 }
