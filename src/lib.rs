@@ -314,7 +314,7 @@ pub fn print_title(title_string: &str) {
 }
 
 pub fn print_title_blue(title_string: &str) {
-    horiz_line_blue();
+    println!("");
     for c in title_string.chars() {
         print!("{}", " ");
         print!("{}", c.to_string().blue().bold());
@@ -365,12 +365,12 @@ pub fn tsize() -> (u16, u16) {
 
 pub fn window(wdw: &Window) {
 
-    let ul = "┌";
-    let ur = "┐";
-    let ll = "└";
-    let lr = "┘";
-    let hor = "─";
-    let ver = "│";
+    let ul = "┌".white();
+    let ur = "┐".white();
+    let ll = "└".white();
+    let lr = "┘".white();
+    let hor = "─".white();
+    let ver = "│".white();
 
     // draw top horizontal
     cmove(wdw.x, wdw.y);
