@@ -8,6 +8,74 @@ use std::io;
 use std::io::prelude::*;
 use std::io::{stdout, Write};
 
+pub struct Frame {
+    pub title: String,
+    pub title_color: String,
+    pub x: u16,
+    pub y: u16,
+    pub w: u16,
+    pub h: u16,
+}
+
+impl Frame {
+    pub fn display(&self) {
+
+        let ul = "┌".white();
+        let ur = "┐".white();
+        let ll = "└".white();
+        let lr = "┘".white();
+        let hor = "─".white();
+        let ver = "│".white();
+
+        // draw top horizontal
+        cmove(self.x, self.y);
+        print!("{}", ul);
+        for _i in 0..(self.w-2) {
+            print!("{}", hor);
+        }
+        print!("{}", ur);
+
+        // draw middle
+        for i in 0..(self.h-1) {
+            cmove(self.x, self.y+i+1);
+            print!("{}", ver);
+            for _j in 0..(self.w-2) {
+                print!(" ");
+            }
+            print!("{}", ver);
+        }
+
+        // draw bottom horizontal
+        cmove(self.x, self.y+self.h);
+        print!("{}", ll);
+        for _i in 0..(self.w-2) {
+            print!("{}", hor);
+        }
+        println!("{}", lr);
+
+        // print title and get string
+        cmove(self.x+2, self.y);
+        if self.title_color == "red" {
+            print!(" {} ", self.title.red());
+        }
+        if self.title_color == "green" {
+            print!(" {} ", self.title.green());
+        }
+        if self.title_color == "blue" {
+            print!(" {} ", self.title.blue());
+        }
+        if self.title_color == "yellow" {
+            print!(" {} ", self.title.yellow());
+        }
+        if self.title_color == "purple" {
+            print!(" {} ", self.title.purple());
+        }
+        if self.title_color == "white" {
+            print!(" {} ", self.title.white());
+        }
+    }
+}
+
 pub struct Window {
     pub x: u16,
     pub y: u16,
