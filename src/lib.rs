@@ -53,25 +53,27 @@ impl Frame {
         }
         println!("{}", lr);
 
-        // print title and get string
-        cmove(self.x+2, self.y);
-        if self.title_color == "red" {
-            print!(" {} ", self.title.red());
-        }
-        if self.title_color == "green" {
-            print!(" {} ", self.title.green());
-        }
-        if self.title_color == "blue" {
-            print!(" {} ", self.title.blue());
-        }
-        if self.title_color == "yellow" {
-            print!(" {} ", self.title.yellow());
-        }
-        if self.title_color == "purple" {
-            print!(" {} ", self.title.purple());
-        }
-        if self.title_color == "white" {
-            print!(" {} ", self.title.white());
+        if self.title.len() > 0 {
+            // print title 
+            cmove(self.x+2, self.y);
+            if self.title_color == "red" {
+                print!(" {} ", self.title.red());
+            }
+            if self.title_color == "green" {
+                print!(" {} ", self.title.green());
+            }
+            if self.title_color == "blue" {
+                print!(" {} ", self.title.blue());
+            }
+            if self.title_color == "yellow" {
+                print!(" {} ", self.title.yellow());
+            }
+            if self.title_color == "purple" {
+                print!(" {} ", self.title.purple());
+            }
+            if self.title_color == "white" {
+                print!(" {} ", self.title.white());
+            }
         }
     }
 }
