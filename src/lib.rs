@@ -20,10 +20,10 @@ pub struct Frame {
 impl Frame {
     pub fn display(&self) {
 
-        let ul = "┌".white();
-        let ur = "┐".white();
-        let ll = "└".white();
-        let lr = "┘".white();
+        let ul = "╭".white();
+        let ur = "╮".white();
+        let ll = "╰".white();
+        let lr = "╯".white();
         let hor = "─".white();
         let ver = "│".white();
 
