@@ -100,10 +100,11 @@ pub fn dialog_box_get_string(width: u16, height: u16, title: &str, prompt: &str)
     let x = (term_width - width)/2;
     let y = (term_height - height)/2;
 
-    let ul = "┌";
-    let ur = "┐";
-    let ll = "└";
-    let lr = "┘";
+    let ul = "╭";
+    let ur = "╮";
+    let ll = "╰";
+    let lr = "╯";
+
     let hor = "─";
     let ver = "│";
 
