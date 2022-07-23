@@ -18,6 +18,17 @@ pub struct Frame {
 }
 
 impl Frame {
+
+    pub fn clear(&self) {
+        // draw middle
+        for i in 0..(self.h-1) {
+            cmove(self.x+1, self.y+i+1);
+            for _j in 0..(self.w-2) {
+                print!(" ");
+            }
+        }
+    }
+
     pub fn display(&self) {
 
         let ul = "╭".white();
@@ -365,6 +376,7 @@ pub fn pause() {
 
 pub fn pause_any() {
     let (w, h) = tsize();
+    let clear_message = "                            ";
     let message = "Press any key to continue...".blue();
     let message_len: u16 = message.len() as u16;
     cmove((w - message_len)/2, h - 2);
@@ -372,7 +384,9 @@ pub fn pause_any() {
     std::io::stdout().flush().unwrap();
     let g = Getch::new();
     let _keypress = g.getch().unwrap();
-    cls();
+    //cls();
+    cmove((w - message_len)/2, h - 2);
+    print!("{}", clear_message);
 }
 
 pub fn print_title(title_string: &str) {
